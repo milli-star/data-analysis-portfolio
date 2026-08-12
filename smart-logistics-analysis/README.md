@@ -43,3 +43,17 @@ Python, pandas, matplotlib, seaborn
 
 ## 데이터 파일
 `data/smart_logistics_dataset.csv` (Kaggle 원본, 재배포 가능 여부는 출처 라이선스 확인 필요)
+
+### 추가 검증: 상관계수 및 히트맵
+
+지연 사유 라벨을 더 정밀하게 검증하기 위해, 각 사유를 더미 변수(0/1)로 변환하여 전체 수치형 변수와의 상관계수를 히트맵으로 확인했다.
+
+| 검증 항목 | 상관계수 |
+|---|---|
+| Reason_Weather ↔ Temperature | 0.01 |
+| Reason_Weather ↔ Humidity | -0.04 |
+| Reason_Mechanical Failure ↔ Asset_Utilization | 0.07 |
+
+모든 값이 ±0.1 이내로, 지연 사유 라벨이 관련 환경/자산 변수와 통계적으로 무관함을 재확인했다. 또한 Weather 사유 건(267건)의 평균 온도(23.96)·습도(64.49)는 전체 평균(23.89, 65.04)과 거의 동일했으며, 히스토그램상 분포도 전체와 겹쳐 있어 특정 온도·습도 구간에 쏠리는 패턴이 없었다.
+
+**참고로 온도·습도와 자산 가동률(Asset_Utilization) 사이에도 상관관계가 없음을 확인**했다(산점도상 무작위 분포). 이는 이 데이터셋의 변수들이 서로 인위적인 연관성 없이 생성되었을 가능성을 시사하며, 오직 Traffic_Status만이 Logistics_Delay와 실질적 관계를 갖는 유일한 변수임을 뒷받침한다.
